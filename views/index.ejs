@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/secured/home/">Harshi Technical Services</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/secured/home/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/secured/attendance/">Attendance</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/secured/users/">Users</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <br>
+        <h1>Attendance</h1><br>
+        <h1>
+            <%= date %>
+        </h1><br>
+        <a href="/secured/evening/" class="float-right btn btn-primary">Evening Attendance </a>
+        <a href="/secured/morning/" class="btn btn-primary">Morning Attendance</a><br><br>
+        <% if(morning) { %>
+            <table class="table table-hover">
+                <thead>
+                    <th>Name</th>
+                    <th>Time</th>
+                    <th>Image</th>
+                </thead>
+                <tbody>
+                    <% for(var key in info) { %>
+                        <tr>
+                            <td>
+                                <%= key %>
+                            </td>
+                            <% if(info[key].Morning) { %>
+                                <td>
+                                    <%= info[key].Morning.Time %>
+                                </td>
+                                <% } %>
+                                    <% if(info[key].Morning) { %>
+                                        <td><img src="<%= info[key].Morning.Image %>" width="200rem" height="200rem" alt="image"></td>
+                                        <% } %>
+                        </tr>
+                        <% } %>
+
+                </tbody>
+            </table>
+            <% } %>
+                <% if(evening) { %>
+                    <table class="table table-hover">
+                        <thead>
+                            <th>Name</th>
+                            <th>Time</th>
+                            <th>Image</th>
+                            <th>Work</th>
+                        </thead>
+                        <tbody>
+                            <% for(var key in info) { %>
+                                <tr>
+                                    <td>
+                                        <%= key %>
+                                    </td>
+                                    <% if(info[key].Evening) { %>
+                                        <td>
+                                            <%= info[key].Evening.Time %>
+                                        </td>
+                                        <td><img src="<%= info[key].Evening.Image %>" width="200rem" height="200rem" alt="image"></td>
+                                        <td>
+                                            <%= info[key].Evening.Work %>
+                                        </td>
+                                        <% } %>
+                                </tr>
+                                <% } %>
+                        </tbody>
+                    </table>
+                    <% } %>
+                        <% if(empty) { %>
+                            <h1> No attendance found.</h1>
+                            <% } %>
+    </div>
+    <br><br>
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/popper.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+</body>
+
+</html>
