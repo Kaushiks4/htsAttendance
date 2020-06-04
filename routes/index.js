@@ -16,7 +16,11 @@ router.post('/', function(req, res, next) {
     if (name.toLowerCase() == "sathish") {
         if (pwd == "sathish@8088684138") {
             res.redirect('/secured/home/');
+        } else {
+            res.send("Invalid password");
         }
+    } else {
+        res.send("Invalid username")
     }
 });
 router.get('/secured/home/', function(req, res, next) {
@@ -31,7 +35,7 @@ router.get('/secured/home/', function(req, res, next) {
 
 router.get('/secured/morning/', function(req, res, next) {
     var map = {};
-    var info = [];
+    var info = {};
     var d = new Date();
     var dd = d.getDate();
     var m = d.getMonth() + 1;
@@ -86,7 +90,21 @@ router.get('/secured/morning/', function(req, res, next) {
     db.child("Details").child(month).child(date).once("value", function(snapshot) {
         if (snapshot.val() != null) {
             map = snapshot.val();
-            res.render('index', { title: 'Attendance', date: date, info: map, morning: true, evening: false, empty: false });
+            for (var key in map) {
+                if ("Morning" in map[key]) {
+                    info[key] = map[key];
+                }
+            }
+            var k = 0;
+            for (var key in info) {
+                k = 1;
+                break;
+            }
+            if (k == 0) {
+                res.render('index', { title: 'Attendance', date: date, info: null, morning: false, evening: false, empty: true });
+            } else {
+                res.render('index', { title: 'Attendance', date: date, info: info, morning: true, evening: false, empty: false });
+            }
         } else {
             res.render('index', { title: 'Attendance', date: date, info: null, morning: false, evening: false, empty: true });
         }
@@ -95,7 +113,7 @@ router.get('/secured/morning/', function(req, res, next) {
 
 router.get('/secured/evening/', function(req, res, next) {
     var map = {};
-    var info = [];
+    var info = {};
     var d = new Date();
     var dd = d.getDate();
     var m = d.getMonth() + 1;
@@ -150,7 +168,21 @@ router.get('/secured/evening/', function(req, res, next) {
     db.child("Details").child(month).child(date).once("value", function(snapshot) {
         if (snapshot.val() != null) {
             map = snapshot.val();
-            res.render('index', { title: 'Attendance', date: date, info: map, morning: false, evening: true, empty: false });
+            for (var key in map) {
+                if ("Evening" in map[key]) {
+                    info[key] = map[key];
+                }
+            }
+            var k = 0;
+            for (var key in info) {
+                k = 1;
+                break;
+            }
+            if (k == 0) {
+                res.render('index', { title: 'Attendance', date: date, info: null, morning: false, evening: false, empty: true });
+            } else {
+                res.render('index', { title: 'Attendance', date: date, info: info, morning: false, evening: true, empty: false });
+            }
         } else {
             res.render('index', { title: 'Attendance', date: date, info: null, morning: false, evening: false, empty: true });
         }
@@ -195,7 +227,7 @@ router.get('/secured/delete/:name', function(req, res, next) {
 });
 
 router.get('/secured/attendance/', function(req, res, next) {
-    res.render('attendance', { title: "Attendance", info: null, show: false, fulldays: null, halfdays: null });
+    res.render('attendance', { title: "Attendance", info: null, choose: true, show: false, fulldays: null, halfdays: null });
 });
 
 router.post('/secured/attendance/', function(req, res, next) {
@@ -203,8 +235,47 @@ router.post('/secured/attendance/', function(req, res, next) {
     var map = {}
     var temp = {}
     var info = {}
+    var mon = "";
     var fulldays = {}
     var halfdays = {}
+    switch (month) {
+        case "Jan":
+            mon = "January";
+            break;
+        case "Feb":
+            mon = "February";
+            break;
+        case "Mar":
+            mon = "March";
+            break;
+        case "Apr":
+            mon = "April";
+            break;
+        case 5:
+            mon = "May";
+            break;
+        case "Jun":
+            mon = "June";
+            break;
+        case "Jul":
+            mon = "July";
+            break;
+        case "Aug":
+            mon = "August";
+            break;
+        case "Sep":
+            mon = "September";
+            break;
+        case "Oct":
+            mon = "October";
+            break;
+        case "Nov":
+            mon = "November";
+            break;
+        case "Dec":
+            mon = "December";
+            break;
+    }
     db.child("Details").child(month).once("value", function(snap) {
         temp = snap.val();
         db.child('Users').once("value", function(snapshot) {
@@ -232,8 +303,10 @@ router.post('/secured/attendance/', function(req, res, next) {
                 fulldays[key] = k;
                 halfdays[key] = m;
             }
-            res.render('attendance', { title: "Attendance", info: info, show: true, fulldays: fulldays, halfdays: halfdays });
+            res.render('attendance', { title: "Attendance", info: info, choose: false, show: true, month: mon, fulldays: fulldays, halfdays: halfdays });
         });
     });
 });
+
+
 module.exports = router;

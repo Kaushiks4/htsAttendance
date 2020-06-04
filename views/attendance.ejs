@@ -33,12 +33,14 @@
         </div>
     </nav>
     <div class="container">
+        <br>
         <h1> Detailed Attendance</h1>
         <br><br>
-        <form method="post">
-            <div class="form-group">
-                <label for="month">Month Name</label>
-                <select class="form-control" id="month" name="month">
+        <% if(choose) { %>
+            <form method="post">
+                <div class="form-group">
+                    <label for="month">Month Name</label>
+                    <select class="form-control" id="month" name="month">
                     <option>Jan</option>
                     <option>Feb</option>
                     <option>Mar</option>
@@ -52,66 +54,70 @@
                     <option>Nov</option>
                     <option>Dec</option>
                 </select>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-success" value="Submit" />
-            </div>
-        </form>
-        <% if(show) { %>
-            <% for(var key in info) { %>
-                <div class="card">
-                    <div class="card-body">
-                        <h1 class="card-title">
-                            <%= key %>
-                        </h1>
-                        <p> No of full working days :
-                            <%= fulldays[key] %>
-                        </p>
-                        <p> No of half working days :
-                            <%= halfdays[key] %>
-                        </p>
-                        <table class="table table-hover">
-                            <thead>
-                                <th>Date</th>
-                                <th>Morning Time</th>
-                                <th>Morning Image</th>
-                                <th>Evening Time</th>
-                                <th>Evening Image</th>
-                                <th>Work</th>
-                            </thead>
-                            <tbody>
-                                <% for(var k in info[key]) { %>
-                                    <tr>
-                                        <td>
-                                            <%= k %>
-                                        </td>
-                                        <% if(info[key][k][key].Morning) { %>
-                                            <td>
-                                                <%= info[key][k][key].Morning.Time %>
-                                            </td>
-                                            <td><img src="<%= info[key][k][key].Morning.Image %>" width="100rem" height="100rem" alt="no image">
-                                            </td>
-                                            <% } %>
-                                                <% if(info[key][k][key].Evening) { %>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success" value="Submit" />
+                </div>
+            </form>
+            <% } %>
+                <% if(show) { %>
+                    <h1>
+                        <%= month %>
+                    </h1><br><br>
+                    <% for(var key in info) { %>
+                        <div class="card">
+                            <div class="card-body">
+                                <h1 class="card-title">
+                                    <%= key %>
+                                </h1>
+                                <p> No of full working days :
+                                    <%= fulldays[key] %>
+                                </p>
+                                <p> No of half working days :
+                                    <%= halfdays[key] %>
+                                </p>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <th>Date</th>
+                                        <th>Morning Time</th>
+                                        <th>Morning Image</th>
+                                        <th>Evening Time</th>
+                                        <th>Evening Image</th>
+                                        <th>Work</th>
+                                    </thead>
+                                    <tbody>
+                                        <% for(var k in info[key]) { %>
+                                            <tr>
+                                                <td>
+                                                    <%= k %>
+                                                </td>
+                                                <% if(info[key][k][key].Morning) { %>
                                                     <td>
-                                                        <%= info[key][k][key].Evening.Time %>
+                                                        <%= info[key][k][key].Morning.Time %>
                                                     </td>
-                                                    <td>
-                                                        <img src="<%= info[key][k][key].Evening.Image %>" width="100rem" height="100rem" alt="no image">
-                                                    </td>
-                                                    <td>
-                                                        <%= info[key][k][key].Evening.Work %>
+                                                    <td><img src="<%= info[key][k][key].Morning.Image %>" width="100rem" height="100rem" alt="no image">
                                                     </td>
                                                     <% } %>
-                                    </tr>
-                                    <% } %>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <br><br>
-                <% } %>
-                    <% } %>
+                                                        <% if(info[key][k][key].Evening) { %>
+                                                            <td>
+                                                                <%= info[key][k][key].Evening.Time %>
+                                                            </td>
+                                                            <td>
+                                                                <img src="<%= info[key][k][key].Evening.Image %>" width="100rem" height="100rem" alt="no image">
+                                                            </td>
+                                                            <td>
+                                                                <%= info[key][k][key].Evening.Work %>
+                                                            </td>
+                                                            <% } %>
+                                            </tr>
+                                            <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <br><br>
+                        <% } %>
+                            <% } %>
     </div>
     <br><br>
     <script src="/javascripts/jquery.min.js"></script>
