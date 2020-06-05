@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/secured/home/">Harshi Technical Services</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/secured/home/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/secured/attendance/">Attendance</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/secured/works/">Works</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/secured/users/">Users</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <br><br><br>
+        <% if(show) { %>
+            <a class="btn btn-primary" href="/secured/works/HLBC 0-72Km/">HLBC 0-72Km </a><br><br>
+            <a class="btn btn-primary" href="/secured/works/Bairagondlu dam/">Bairagondlu dam</a><br><br>
+            <a class="btn btn-primary" href="/secured/works/HLBC 72-214Km/">HLBC 72-214Km </a><br><br>
+            <a class="btn btn-primary" href="/secured/works/HLBC 72-214Km/">Duddha and Shantigrama</a><br><br>
+            <a class="btn btn-primary" href="/secured/works/HLBC 72-214Km/">Gowribidanur gravity canal</a><br><br>
+            <a class="btn btn-primary" href="/secured/works/HLBC 72-214Km/">NRBC 0-95Km </a><br><br>
+            <a class="btn btn-primary" href="/secured/works/HLBC 72-214Km/">Malaprabha ERM-1 </a><br><br>
+            <a class="btn btn-primary" href="/secured/works/HLBC 72-214Km/">Malaprabha ERM-2 </a><br><br>
+            <a class="btn btn-primary" href="/secured/works/HLBC 72-214Km/">Gharaprabha ERM-1 </a><br><br>
+            <a class="btn btn-primary" href="/secured/works/HLBC 72-214Km/">Ghataprabha ERM-2 </a><br><br>
+            <a class="btn btn-primary" href="/secured/works/HLBC 72-214Km/">Yattinahole 25-55Km </a><br><br>
+            <% } %>
+                <% if(details) { %>
+                    <% for(var key in info) { %>
+                        <div class="card">
+                            <div class="card-body">
+                                <h1 class="card-title">
+                                    <%= work %>
+                                </h1>
+                                <p> Name:
+                                    <%= key %>
+                                </p>
+                                <p> Date:
+                                    <%= info[key].Date %>
+                                </p>
+                                <p> User:
+                                    <%= info[key].Uploaded_by %>
+                                </p>
+                                <a class="btn btn-primary" href="<%= info[key].File %>">Download</a>
+                            </div>
+                        </div>
+                        <br><br>
+                        <% } %>
+                            <% } %>
+    </div>
+    <br><br>
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/popper.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+</body>
+
+</html>
