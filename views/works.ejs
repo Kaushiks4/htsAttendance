@@ -33,6 +33,12 @@
                     <a class="nav-link" href="/secured/users/">Users</a>
                 </li>
             </ul>
+            <div class="search">
+                <form method="post">
+                    <input type="text" name="search" placeholder="Search.." />
+                    <input type="submit" value="Search" />
+                </form>
+            </div>
         </div>
     </nav>
     <div class="container">
@@ -53,22 +59,22 @@
             <a class="btn btn-primary" href="/secured/works/Miscellaneous/">Miscellaneous</a><br><br>
             <% } %>
                 <% if(details) { %>
-                    <% for(var key in info) { %>
+                    <h1>
+                        <%= work %>
+                    </h1><br>
+                    <% for(var i=0; i < info.length; i++) { %>
                         <div class="card">
                             <div class="card-body">
-                                <h1 class="card-title">
-                                    <%= work %>
-                                </h1>
                                 <p> Name:
-                                    <%= key %>
+                                    <%= info[i].Name %>
                                 </p>
                                 <p> Date:
-                                    <%= info[key].Date %>
+                                    <%= info[i].Date %>
                                 </p>
                                 <p> User:
-                                    <%= info[key].Uploaded_by %>
+                                    <%= info[i].Uploaded_by %>
                                 </p>
-                                <a class="btn btn-primary" href="<%= info[key].File %>">Download</a>
+                                <a class="btn btn-primary" href="<%= info[i].File %>">Download</a>
                             </div>
                         </div>
                         <br><br>

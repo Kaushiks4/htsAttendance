@@ -312,12 +312,36 @@ router.get('/secured/works/', function(req, res, next) {
     res.render('works', { title: 'Works', show: true, empty: false, details: false, info: null, work: null });
 });
 
-router.get('/secured/works/:work', function(req, res, next) {
+router.get('/secured/works/:work/', function(req, res, next) {
     var work = req.params.work;
-    info = {}
+    map = {}
+    info = []
     db.child("Works").child(work).once("value", function(snapshot) {
         if (snapshot.val() != null) {
-            info = snapshot.val();
+            map = snapshot.val();
+            for (var key in map) {
+                info.push(map[key]);
+            }
+            res.render('works', { title: 'Works', show: false, empty: false, details: true, info: info, work: work });
+        } else {
+            res.render('works', { title: 'Works', show: false, empty: true, details: false, info: null, work: null });
+        }
+    });
+});
+
+router.post('/secured/works/:work/', function(req, res, next) {
+    var work = req.params.work;
+    var search = req.body.search;
+    map = {}
+    info = []
+    db.child("Works").child(work).once("value", function(snapshot) {
+        if (snapshot.val() != null) {
+            map = snapshot.val();
+            for (var key in map) {
+                if (map[key].Uploaded_by == search) {
+                    info.push(map[key]);
+                }
+            }
             res.render('works', { title: 'Works', show: false, empty: false, details: true, info: info, work: work });
         } else {
             res.render('works', { title: 'Works', show: false, empty: true, details: false, info: null, work: null });
