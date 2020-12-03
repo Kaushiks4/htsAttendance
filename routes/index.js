@@ -14,7 +14,7 @@ router.post('/', function(req, res, next) {
     var pwd = req.body.pass;
 
     if (name.toLowerCase() == "sathish") {
-        if (pwd == "sathish@8088684138") {
+        if (pwd == "8088684138") {
             res.redirect('/secured/home/');
         } else {
             res.send("Invalid password");
